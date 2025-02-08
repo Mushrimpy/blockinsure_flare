@@ -1,7 +1,13 @@
+const {heroui} = require('@heroui/theme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
-  plugins: [require("daisyui")],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./utils/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@heroui/theme/dist/components/(button|ripple|spinner).js"
+  ],
+  plugins: [require("daisyui"),heroui()],
   darkTheme: "dark",
   darkMode: ["selector", "[data-theme='dark']"],
   daisyui: {
