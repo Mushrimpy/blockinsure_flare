@@ -3,6 +3,7 @@ import { Address } from "~~/components/scaffold-eth"
 import { CloudIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline"
 import { useEffect, useState } from "react"
 import { RealData } from "./RealData"
+import { Sellers } from "./Sellers";
 
 // Fetch weather data (Replace with API call)
 const fetchWeatherData = async () => {
@@ -90,6 +91,7 @@ export const WeatherDashboard = () => {
             <RealData
                 text="Use Flare FDC to get rainfall data on the blockchain"
             />
+            <Sellers />
 
             {/* Transactions Table */}
             <div className="bg-base-200 rounded-lg p-6 shadow">
