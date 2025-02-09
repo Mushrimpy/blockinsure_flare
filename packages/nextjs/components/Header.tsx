@@ -22,7 +22,7 @@ export const menuLinks: HeaderMenuLink[] = [
 
   {
     label: "Sell Insurance",
-    href: "/sell",
+    href: "/debug",
     icon: <GlobeAltIcon className="h-4 w-4" />,
   },
 ];
