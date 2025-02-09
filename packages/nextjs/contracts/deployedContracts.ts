@@ -6,6 +6,394 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
   31337: {
+    WeatherInsuranceMarketplace: {
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      abi: [
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "policyId",
+              type: "uint256",
+            },
+          ],
+          name: "PolicyCancelled",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "policyId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "rainfall",
+              type: "uint256",
+            },
+          ],
+          name: "PolicyClientCheck",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "policyId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "insurer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "coverage",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "premium",
+              type: "uint256",
+            },
+          ],
+          name: "PolicyCreated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "policyId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "policyholder",
+              type: "address",
+            },
+          ],
+          name: "PolicyPurchased",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "policyId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "rainfall",
+              type: "uint256",
+            },
+          ],
+          name: "PolicyReturnCheck",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "policyId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "PolicySettled",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "OTHER_CONTRACT",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "SETTLEMENT_WINDOW",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_policyId",
+              type: "uint256",
+            },
+          ],
+          name: "cancelPolicy",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_maturitySecond",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_coverage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_premium",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_cityNum",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_threshold",
+              type: "uint256",
+            },
+          ],
+          name: "createPolicy",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_policyId",
+              type: "uint256",
+            },
+          ],
+          name: "getPolicyStatus",
+          outputs: [
+            {
+              internalType: "address",
+              name: "_insurer",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_policyholder",
+              type: "address",
+            },
+            {
+              internalType: "bool",
+              name: "_isFinalized",
+              type: "bool",
+            },
+            {
+              internalType: "bool",
+              name: "_isPaidOut",
+              type: "bool",
+            },
+            {
+              internalType: "uint256",
+              name: "_coverage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_premium",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_maturitySecond",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_purchaseDeadline",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_deposit",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "policies",
+          outputs: [
+            {
+              internalType: "address",
+              name: "insurer",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "policyholder",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "maturitySecond",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "purchaseDeadline",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isFinalized",
+              type: "bool",
+            },
+            {
+              internalType: "bool",
+              name: "isPaidOut",
+              type: "bool",
+            },
+            {
+              internalType: "uint256",
+              name: "coverage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "premium",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "cityNum",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "threshold",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "deposit",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_policyId",
+              type: "uint256",
+            },
+          ],
+          name: "purchasePolicy",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_policyId",
+              type: "uint256",
+            },
+          ],
+          name: "settle",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
     YourContract: {
       address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [

@@ -10,9 +10,35 @@ export type ScaffoldConfig = {
 
 export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
+// Add Coston2 network configuration
+const coston2: chains.Chain = {
+  id: 114,
+  name: "Coston2",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Coston2 Flare",
+    symbol: "C2FLR",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://coston2-api.flare.network/ext/C/rpc"],
+    },
+    public: {
+      http: ["https://coston2-api.flare.network/ext/C/rpc"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Coston2 Explorer",
+      url: "https://coston2-explorer.flare.network",
+    },
+  },
+  testnet: true,
+};
+
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  targetNetworks: [coston2],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

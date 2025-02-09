@@ -95,6 +95,11 @@ const config: HardhatUserConfig = {
       url: `https://polygon-mainnet.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
     },
+    coston2: {
+      url: `https://coston2-api.flare.network/ext/C/rpc`,
+      accounts: [deployerPrivateKey],
+      chainId: 114,
+    },
     polygonMumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
