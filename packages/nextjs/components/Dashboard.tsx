@@ -6,7 +6,8 @@ import { RealData } from "./RealData"
 import { Sellers } from "./Sellers";
 
 
-// Address for Contract : 0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6
+// OLD Insurance contract address: 0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6
+// NEW Insurance contract address: 0xe4ee44a1703f3ed5b4aa58641a6ca0b2f4966a7c
 
 
 // Fetch weather data (Replace with API call)

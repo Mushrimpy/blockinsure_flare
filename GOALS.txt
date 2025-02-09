@@ -1,0 +1,32 @@
+
+Morning steps
+1. Add functionality to change in API (github action/api call)
+2. Finish contract selling storefront in frontend 
+3. Test with two people on contract.
+4. Analytics (total premiums ppl)
+
+
+
+
+4. Vercel (QR code for ppl to play around with during demo.)
+
+
+
+Micro Insurance-micro loans (spin it as this)
+Democratize financial stability/access
+Demo flow (currently)
+- person A is a farmer, sees weather forecast is drought tomorrow, looks at our list and takes out weather contract in case of drought tomorrow
+- Person B creates policy 
+    - Anyone bc blockchain can engage on other side (maybe someone want to make a bit more cash with capital)
+    - Instant relief (automatic stabilizer), no need to wait
+    - easy, anonymous access to capital (eliminates biases)
+- Indeed is drought tomorrow, so Person A gets paid immediately
+- Not daily but monthly, which is why we have 7 day window. 
+
+Anything we can build on top?
+To Build?
+- How hard would it be to use live data? + what benefit?
+- Deploying to vercel?
+- Transaction history and analytics?
+
+
