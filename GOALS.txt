@@ -1,32 +1,25 @@
+Narrative:
+We all know success of microloans great at helping people expand entrepreneurship
+- hard to get approved a loan
+- limited capital
+- Long waiting times
+But what if these were not only resolved, but the system made better, allowing people to predict when they might need capital. Enter Flareinsure. Insurance contracts based in on oracle real world events on blockchain. Farmer who not sure about rainfall next month, can buy this micro-insurance.
+- allow anyone to engage the other side (larger market)
+- instant and accurate payout (no bureacracy wiht smart contracts)
+- easy, anonymous access to capital.
 
-Morning steps
-1. Add functionality to change in API (github action/api call)
-2. Finish contract selling storefront in frontend 
-3. Test with two people on contract.
-4. Analytics (total premiums ppl)
+How does it work? 2 party system, flareinsure is a marketplace which empowers buyers and sellers of micro insurance. 
+- Sellers first create a contract (how many days, what is the underlying (right now is rainfall as a proof of concept, but really is a number, can be anything), premium, etc)
+- Buyers then can peruse a range of contract options, find one which is most appropriate for themselves, and then "purchase" the policy by paying the premium to seller
+- At settlement date, our marketplace allows ANYONE to request real time data using Flare's FDC which uses our web2 endpoint to verify data and place it on chain.
+- Creation, purchase, and settlement is smart contract, so no foul play
 
 
+Although proof of concept, this is fully customizable
 
 
-4. Vercel (QR code for ppl to play around with during demo.)
+Technical Implementation (Include image)
 
 
-
-Micro Insurance-micro loans (spin it as this)
-Democratize financial stability/access
-Demo flow (currently)
-- person A is a farmer, sees weather forecast is drought tomorrow, looks at our list and takes out weather contract in case of drought tomorrow
-- Person B creates policy 
-    - Anyone bc blockchain can engage on other side (maybe someone want to make a bit more cash with capital)
-    - Instant relief (automatic stabilizer), no need to wait
-    - easy, anonymous access to capital (eliminates biases)
-- Indeed is drought tomorrow, so Person A gets paid immediately
-- Not daily but monthly, which is why we have 7 day window. 
-
-Anything we can build on top?
-To Build?
-- How hard would it be to use live data? + what benefit?
-- Deploying to vercel?
-- Transaction history and analytics?
 
 
