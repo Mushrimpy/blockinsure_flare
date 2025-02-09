@@ -1,7 +1,87 @@
-// import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from "wagmi";
+// import { useAccount, useReadContract, useWriteContract, useWaitForTransaction } from "wagmi";
 // import { formatEther } from "viem";
 // import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 // import { notification } from "~~/utils/scaffold-eth";
+import { useReadContract } from 'wagmi'
+
+export const Sellers = () => {
+    const { data, isLoading, isError, error } = useReadContract({
+        address: "0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6",
+        abi: [
+            {
+                name: "getPolicyStatus",
+                type: "function",
+                stateMutability: "view",
+                inputs: [{
+                    internalType: "uint256",
+                    name: "_policyId",
+                    type: "uint256",
+                  }],
+                outputs: [{
+                    internalType: "address",
+                    name: "_insurer",
+                    type: "address",
+                  },
+                  {
+                    internalType: "address",
+                    name: "_policyholder",
+                    type: "address",
+                  },
+                  {
+                    internalType: "bool",
+                    name: "_isFinalized",
+                    type: "bool",
+                  },
+                  {
+                    internalType: "bool",
+                    name: "_isPaidOut",
+                    type: "bool",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "_coverage",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "_premium",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "_maturitySecond",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "_purchaseDeadline",
+                    type: "uint256",
+                  },
+                  {
+                    internalType: "uint256",
+                    name: "_deposit",
+                    type: "uint256",
+                  }], // Adjust based on actual return type
+            },
+        ],
+        functionName: "getPolicyStatus",
+        args: [1],
+    });
+
+    console.log("Data:", data);
+    console.log("Loading:", isLoading);
+    console.log("Error:", isError, error);
+
+    if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error: {error?.message || "Unknown error"}</p>;
+
+    return (
+        <div>
+            <h2>Policy Status</h2>
+            <p>{data ? data.toString() : "No data available"}</p>
+        </div>
+    );
+};
 
 // interface Policy {
 //   insurer: string;
