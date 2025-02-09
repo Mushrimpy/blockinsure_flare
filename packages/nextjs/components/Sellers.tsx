@@ -4,8 +4,8 @@
 // import { notification } from "~~/utils/scaffold-eth";
 import { useReadContract } from 'wagmi'
 
-export const Sellers = () => {
-    const { data, isLoading, isError, error } = useReadContract({
+function getPolicy(num : number) {
+    return useReadContract({
         address: "0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6",
         abi: [
             {
@@ -65,8 +65,12 @@ export const Sellers = () => {
             },
         ],
         functionName: "getPolicyStatus",
-        args: [1],
+        args: [num],
     });
+}
+
+export const Sellers = () => {
+    const { data, isLoading, isError, error } = getPolicy(1);
 
     console.log("Data:", data);
     console.log("Loading:", isLoading);
