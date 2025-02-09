@@ -185,6 +185,30 @@ contract WeatherInsuranceMarketplace {
     }
 
     /**
+     * @notice Gets all active policies
+     */
+    function getAllPolicies() external view returns (Policy[] memory) {
+        uint256 count = 0;
+        // First pass: count valid policies
+        for (uint256 i = 1; i < nextPolicyId; i++) {
+            if (policies[i].insurer != address(0)) {
+                count++;
+            }
+        }
+
+        // Second pass: create array of valid policies
+        Policy[] memory allPolicies = new Policy[](count);
+        uint256 index = 0;
+        for (uint256 i = 1; i < nextPolicyId; i++) {
+            if (policies[i].insurer != address(0)) {
+                allPolicies[index] = policies[i];
+                index++;
+            }
+        }
+        return allPolicies;
+    }
+
+    /**
      * @notice Gets the full status of a policy
      */
     function getPolicyStatus(
@@ -218,7 +242,6 @@ contract WeatherInsuranceMarketplace {
         );
     }
 }
-
 // //SPDX-License-Identifier: MIT
 // pragma solidity >=0.8.0 <0.9.0;
 

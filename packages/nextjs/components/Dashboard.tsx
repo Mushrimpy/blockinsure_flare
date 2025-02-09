@@ -3,7 +3,7 @@ import { Address } from "~~/components/scaffold-eth"
 import { CloudIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline"
 import { useEffect, useState } from "react"
 import { RealData } from "./RealData"
-// import { Sellers } from "./Sellers";
+import { Sellers } from "./Sellers";
 
 
 // Address for Contract : 0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6
@@ -95,7 +95,7 @@ export const WeatherDashboard = () => {
             <RealData
                 text="Use Flare FDC to get rainfall data on the blockchain"
             />
-            {/* <Sellers /> */}
+            <Sellers />
 
             {/* Transactions Table */}
             <div className="bg-base-200 rounded-lg p-6 shadow">
