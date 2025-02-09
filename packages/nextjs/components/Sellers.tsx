@@ -80,7 +80,7 @@ export const Sellers = () => {
   useEffect(() => {
     const fetchPolicies = async () => {
       const fetchedPolicies: Policy[] = [];
-      
+
       for (let i = 1; i <= 100; i++) {
         try {
           const result = await client.readContract({
@@ -156,28 +156,27 @@ export const Sellers = () => {
             <tr>
               <th className="rounded-l-lg bg-base-200">ID</th>
               <th className="bg-base-200">Insurer</th>
-              <th className="bg-base-200">Coverage (ETH)</th>
-              <th className="bg-base-200">Premium (ETH)</th>
+              <th className="bg-base-200">Coverage</th>
+              <th className="bg-base-200">Premium</th>
               <th className="bg-base-200">Deadline</th>
               <th className="rounded-r-lg bg-base-200">Action</th>
             </tr>
           </thead>
           <tbody>
             {sortedPolicies.map((policy, id) => (
-              <tr 
-                key={id} 
-                className={`hover border-base-200 border-2 my-2 ${
-                  policy.isFinalized 
-                    ? 'bg-blue-50 dark:bg-blue-950/30' 
-                    : ''
-                }`}
+              <tr
+                key={id}
+                className={`hover border-base-200 border-2 my-2 ${policy.isFinalized
+                  ? 'bg-blue-50 dark:bg-blue-950/30'
+                  : ''
+                  }`}
               >
                 <td className="rounded-l-lg">{id + 1}</td>
                 <td className="font-mono">
                   {policy.insurer.slice(0, 6)}...{policy.insurer.slice(-4)}
                 </td>
-                <td>{policy.coverage?.toString() || '0'}</td>
-                <td>{policy.premium?.toString() || '0'}</td>
+                <td>{(Number(policy.coverage) / 1e18).toFixed(2)} FLR</td>
+                <td>{(Number(policy.premium) / 1e18).toFixed(2)} FLR</td>
                 <td>{new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}</td>
                 <td className="rounded-r-lg">
                   {policy.isFinalized ? (

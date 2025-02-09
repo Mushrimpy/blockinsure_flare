@@ -27,9 +27,9 @@ const mockPolicyData = {
 }
 
 const mockBlockchainData = {
-    contractBalance: "5.5 ETH",
+    contractBalance: "5.5 FLR",
     totalPolicies: 150,
-    averagePremium: "0.1 ETH",
+    averagePremium: "0.1 FLR",
 }
 
 export const WeatherDashboard = () => {
@@ -113,19 +113,19 @@ export const WeatherDashboard = () => {
                         <tbody>
                             <tr>
                                 <td>Policy Purchase</td>
-                                <td>0.5 ETH</td>
+                                <td>0.5 FLR</td>
                                 <td>2025-06-15</td>
                                 <td><span className="badge bg-green-200">Confirmed</span></td>
                             </tr>
                             <tr>
                                 <td>Claim Payout</td>
-                                <td>1.2 ETH</td>
+                                <td>1.2 FLR</td>
                                 <td>2025-06-10</td>
                                 <td><span className="badge bg-yellow-200">Pending</span></td>
                             </tr>
                             <tr>
                                 <td>Premium Payment</td>
-                                <td>0.1 ETH</td>
+                                <td>0.1 FLR</td>
                                 <td>2025-06-01</td>
                                 <td><span className="badge bg-green-200">Confirmed</span></td>
                             </tr>
