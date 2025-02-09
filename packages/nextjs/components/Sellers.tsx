@@ -166,18 +166,25 @@ export const Sellers = () => {
             {sortedPolicies.map((policy, id) => (
               <tr
                 key={id}
-                className={`hover border-base-200 border-2 my-2 ${policy.isFinalized
-                  ? 'bg-blue-50 dark:bg-blue-950/30'
-                  : ''
-                  }`}
+                className={`
+                  border-base-200 border-2 my-2 
+                  hover:bg-blue-500/10 transition-colors duration-200
+                  ${policy.isFinalized ? 'bg-blue-50 dark:bg-blue-950/30 text-gray-500' : ''}
+                `}
               >
                 <td className="rounded-l-lg">{id + 1}</td>
-                <td className="font-mono">
+                <td className={`font-mono ${policy.isFinalized ? 'text-gray-500' : ''}`}>
                   {policy.insurer.slice(0, 6)}...{policy.insurer.slice(-4)}
                 </td>
-                <td>{(Number(policy.coverage) / 1e18).toFixed(2)} FLR</td>
-                <td>{(Number(policy.premium) / 1e18).toFixed(2)} FLR</td>
-                <td>{new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}</td>
+                <td className={policy.isFinalized ? 'text-gray-500' : ''}>
+                  {(Number(policy.coverage) / 1e18).toFixed(2)} FLR
+                </td>
+                <td className={policy.isFinalized ? 'text-gray-500' : ''}>
+                  {(Number(policy.premium) / 1e18).toFixed(2)} FLR
+                </td>
+                <td className={policy.isFinalized ? 'text-gray-500' : ''}>
+                  {new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}
+                </td>
                 <td className="rounded-r-lg">
                   {policy.isFinalized ? (
                     <span className="btn btn-sm btn-ghost opacity-60">
