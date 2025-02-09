@@ -35,6 +35,22 @@ const BUY_ABI = [
   },
 ] as const;
 
+const SETTLE_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_policyId",
+        type: "uint256",
+      },
+    ],
+    name: "settle",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+] as const;
+
 const CONTRACT_ABI = [
   {
     name: "getPolicyStatus",
@@ -117,6 +133,21 @@ export const Sellers = () => {
     }
   };
 
+  const handleSettle = async (policy: Policy) => {
+    if (writeContractAsync) {
+      try {
+        await writeContractAsync({
+          address: CONTRACT_ADDRESS,
+          functionName: "settle",
+          abi: SETTLE_ABI,
+          args: [BigInt(policy.id)],
+        });
+      } catch (e: any) {
+        console.error("Error settling policy:", e);
+      }
+    }
+  };
+
   const POLLING_INTERVAL = 10000; // 10 seconds
 
   // Separate the fetchPolicies function outside useEffect
@@ -190,11 +221,20 @@ export const Sellers = () => {
   }, POLLING_INTERVAL);
 
   const sortedPolicies = [...policies].sort((a, b) => {
-    // Sort by isFinalized (available first)
-    if (a.isFinalized !== b.isFinalized) {
-      return a.isFinalized ? 1 : -1;
-    }
-    return 0;
+    // Helper function to get status priority
+    const getStatusPriority = (policy: Policy) => {
+      if (policy.isFinalized) {
+        if (policy.isPaidOut) return 4; // Settled - lowest priority
+        if (Number(policy.maturitySecond) <= Math.floor(Date.now() / 1000)) return 1; // Claimable - highest priority
+        return 2; // Active
+      }
+      return 3; // Available to buy
+    };
+
+    const priorityA = getStatusPriority(a);
+    const priorityB = getStatusPriority(b);
+
+    return priorityA - priorityB;
   });
 
   if (isLoading) return <p>Loading policies...</p>;
@@ -208,46 +248,66 @@ export const Sellers = () => {
             <tr>
               <th className="rounded-l-lg bg-base-200">ID</th>
               <th className="bg-base-200">Insurer</th>
-              <th className="bg-base-200">Coverage (ETH)</th>
-              <th className="bg-base-200">Premium (ETH)</th>
+              <th className="bg-base-200">Coverage</th>
+              <th className="bg-base-200">Premium</th>
               <th className="bg-base-200">Deadline</th>
               <th className="rounded-r-lg bg-base-200">Action</th>
             </tr>
           </thead>
           <tbody>
-            {sortedPolicies.map((policy) => {
-
-              return (
-                <tr
-                  key={policy.id}
-                  className={`hover border-base-200 border-2 my-2 ${policy.isFinalized
-                      ? 'bg-blue-50 dark:bg-blue-950/30'
-                      : ''
-                    }`}
-                >
-                  <td className="rounded-l-lg">{policy.id}</td>
-                  <td className="font-mono">
-                    {policy.insurer.slice(0, 6)}...{policy.insurer.slice(-4)}
-                  </td>
-                  <td>{policy.coverage?.toString() || '0'}</td>
-                  <td>{policy.premium?.toString() || '0'}</td>
-                  <td>{new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}</td>
-                  <td className="rounded-r-lg">
-                    {policy.isFinalized ? (
-                      <span className="btn btn-sm btn-ghost opacity-60">
-                        Sold
+            {sortedPolicies.map((policy) => (
+              <tr
+                key={policy.id}
+                className={`
+                  border-base-200 border-2 my-2 
+                  hover:bg-blue-500/10 transition-colors duration-200
+                  ${policy.isFinalized && policy.isPaidOut ? 'bg-blue-50 dark:bg-blue-950/30 text-gray-500' : ''}
+                `}
+              >
+                <td className="rounded-l-lg">{policy.id}</td>
+                <td className={`font-mono ${policy.isFinalized && policy.isPaidOut ? 'text-gray-500' : ''}`}>
+                  {policy.insurer.slice(0, 6)}...{policy.insurer.slice(-4)}
+                </td>
+                <td className={policy.isFinalized && policy.isPaidOut ? 'text-gray-500' : ''}>
+                  {(Number(policy.coverage) / 1e18).toFixed(2)} FLR
+                </td>
+                <td className={policy.isFinalized && policy.isPaidOut ? 'text-gray-500' : ''}>
+                  {(Number(policy.premium) / 1e18).toFixed(2)} FLR
+                </td>
+                <td className={policy.isFinalized && policy.isPaidOut ? 'text-gray-500' : ''}>
+                  {new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}
+                </td>
+                <td className="rounded-r-lg pl-4">
+                  {policy.isFinalized ? (
+                    policy.isPaidOut ? (
+                      <span className="text-gray-500">
+                        Resolved
                       </span>
                     ) : (
-                      <button className="btn btn-primary btn-sm"
-                        onClick={() => handleWrite(policy)}
-                      >
-                        Buy
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
+                      Number(policy.maturitySecond) <= Math.floor(Date.now() / 1000) ? (
+                        <button
+                          className="btn btn-sm bg-red-400 hover:bg-red-500 text-white border-none"
+                          onClick={() => handleSettle(policy)}
+                        >
+                          Claim
+                        </button>
+                      ) : (
+                        <span>
+                          Active
+                        </span>
+                      )
+                    )
+                  ) : (
+                    <button
+                      className="btn btn-sm bg-blue-400 text-white border-none"
+                      onClick={() => handleWrite(policy)}
+                    >
+                      Buy
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
