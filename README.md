@@ -1,25 +1,10 @@
-# BlockInsure: Decentralized Weather Insurance Platform
-
-BlockInsure is a decentralized weather insurance platform built on the Flare Network, leveraging blockchain technology and real-world weather data to provide transparent, automated insurance policies against rainfall-related risks.
+# FlareInsure: Decentralized Weather Insurance Platform
 
 ## Overview
 
-BlockInsure enables users to create, buy, and settle weather insurance policies in a trustless manner. The platform uses Flare Network's Data Connector (FDC) to fetch real-world rainfall data, ensuring reliable and tamper-proof policy settlements.
-
-### Key Features
-
-- **Create Insurance Policies**: Insurers can create customized policies by specifying:
-  - Coverage amount
-  - Premium cost
-  - Maturity period
-  - Rainfall threshold
-  - City location
-
-- **Purchase Policies**: Users can browse and purchase available policies by paying the premium
-
-- **Automated Settlements**: Smart contracts automatically settle policies based on actual rainfall data
-
-- **Real-time Weather Data**: Integration with Flare Data Connector for reliable weather information
+FlareInsure is a decentralized weather insurance platform built on the Flare Network, leveraging blockchain technology and real-world weather data to provide transparent, automated insurance policies against rainfall-related risks.
+This repository consists of the web app frontend consuming the smart contracts deployed on the Flare Network.
+Backend logic repo: https://github.com/ssocolow/flare_insure
 
 ## How It Works
 
@@ -37,7 +22,6 @@ BlockInsure enables users to create, buy, and settle weather insurance policies 
    - At maturity, smart contract checks rainfall data
    - If rainfall is below threshold: Policyholder receives payout
    - If rainfall is above threshold: Insurer receives collateral back
-   - Settlement window: 1 day after maturity
 
 4. **Data Verification**
    - Rainfall data is fetched from Flare Data Connector
@@ -64,7 +48,6 @@ BlockInsure enables users to create, buy, and settle weather insurance policies 
    - Real-time weather data
    - Policy statistics
    - Financial metrics
-   - Risk assessment
 
 2. **Policy Marketplace**
    - List of available policies
@@ -83,8 +66,8 @@ BlockInsure enables users to create, buy, and settle weather insurance policies 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/blockinsure.git
-cd blockinsure
+git clone https://github.com/Mushrimpy/blockinsure_flare.git
+cd blockinsure_flare
 ```
 
 2. Install dependencies:
@@ -97,92 +80,17 @@ yarn install
 yarn start
 ```
 
-### Smart Contract Deployment
-
-1. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your values
-```
-
-2. Deploy contracts:
-```bash
-yarn deploy
-```
-
-## Usage
-
-1. **Creating a Policy**
-   - Connect wallet
-   - Set policy parameters
-   - Deposit collateral
-   - Confirm transaction
-
-2. **Purchasing a Policy**
-   - Browse available policies
-   - Select desired policy
-   - Pay premium
-   - Receive policy token
-
-3. **Claiming Payout**
-   - Wait for policy maturity
-   - Check rainfall data
-   - Click "Claim" if eligible
-   - Receive payout automatically
-
-## Technical Details
-
-### Policy States
-
-1. **Available**: Created but not purchased
-2. **Active**: Purchased but not matured
-3. **Claimable**: Matured and eligible for settlement
-4. **Resolved**: Settled and paid out
-
-### Settlement Logic
-
-```solidity
-if (rainfall < policy.threshold) {
-    // Pay policyholder
-    recipient = policyholder;
-} else {
-    // Return to insurer
-    recipient = insurer;
-}
-```
-
-## Security
-
-- All smart contracts are open source
-- Collateral locked in smart contracts
-- Decentralized oracle network
-- Automated settlement process
-
-## Future Enhancements
-
-1. Multi-token support
-2. Additional weather parameters
-3. Policy bundling
-4. Secondary market for policies
-5. Advanced risk modeling
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Flare Network team
-- Scaffold-ETH community
-- All contributors and testers
+Special thanks to Phillip and the rest of the Flare team for helping us get set up and guiding our build! Also thanks to Adam Spiers from Toucan for the invaluable mentorship he provided.
 
 ## Contact
 
-For questions and support, please open an issue or contact the team at [contact@blockinsure.com](mailto:contact@blockinsure.com)
+For questions and support, please open an issue or contact the team at [contact@flareinsure.com](mailto:simon.socolow@exeter.ox.ac.uk)
 
 
 
