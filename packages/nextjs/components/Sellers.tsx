@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { usePublicClient } from 'wagmi';
+import { useWriteContract } from 'wagmi'
+import { useInterval } from "usehooks-ts";
+
 
 interface Policy {
+  id: number;
   insurer: string;
   policyholder: string;
   isFinalized: boolean;
@@ -14,6 +18,23 @@ interface Policy {
 }
 
 const CONTRACT_ADDRESS = "0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6";
+
+const BUY_ABI = [
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_policyId",
+        type: "uint256",
+      },
+    ],
+    name: "purchasePolicy",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+] as const;
+
 const CONTRACT_ABI = [
   {
     name: "getPolicyStatus",
@@ -76,66 +97,97 @@ export const Sellers = () => {
   const [policies, setPolicies] = useState<Policy[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const client = usePublicClient();
+  const { writeContract } = useWriteContract();
 
-  useEffect(() => {
-    const fetchPolicies = async () => {
-      const fetchedPolicies: Policy[] = [];
+  const { data: result, isPending, writeContractAsync } = useWriteContract();
 
-      for (let i = 1; i <= 100; i++) {
-        try {
-          const result = await client.readContract({
-            address: CONTRACT_ADDRESS,
-            abi: CONTRACT_ABI,
-            functionName: "getPolicyStatus",
-            args: [BigInt(i)]
-          });
+  const handleWrite = async (policy: Policy) => {
+    if (writeContractAsync) {
+      try {
+        await writeContractAsync({
+          address: CONTRACT_ADDRESS,
+          functionName: "purchasePolicy",
+          abi: BUY_ABI,
+          args: [BigInt(policy.id)],
+          value: BigInt(policy.premium),
+        });
+      } catch (e: any) {
+        console.error("Error purchasing policy:", e);
+      }
+    }
+  };
 
-          // Type guard to ensure result has the expected shape
-          if (!Array.isArray(result) || result.length < 9) {
-            console.error('Unexpected result format:', result);
-            continue;
-          }
+  const POLLING_INTERVAL = 10000; // 10 seconds
 
-          const [
-            insurer,
-            policyholder,
-            isFinalized,
-            isPaidOut,
-            coverage,
-            premium,
-            maturitySecond,
-            purchaseDeadline,
-            deposit
-          ] = result;
+  // Separate the fetchPolicies function outside useEffect
+  const fetchPolicies = async () => {
+    const fetchedPolicies: Policy[] = [];
 
-          // Stop if we hit an empty policy
-          if (insurer === "0x0000000000000000000000000000000000000000") {
-            break;
-          }
+    for (let i = 1; i <= 100; i++) {
+      try {
+        const result = await client.readContract({
+          address: CONTRACT_ADDRESS,
+          abi: CONTRACT_ABI,
+          functionName: "getPolicyStatus",
+          args: [BigInt(i)]
+        });
 
-          fetchedPolicies.push({
-            insurer,
-            policyholder,
-            isFinalized,
-            isPaidOut,
-            coverage,
-            premium,
-            maturitySecond,
-            purchaseDeadline,
-            deposit
-          });
-        } catch (error) {
-          console.error(`Error fetching policy ${i}:`, error);
+        // Type guard to ensure result has the expected shape
+        if (!Array.isArray(result) || result.length < 9) {
+          console.error('Unexpected result format:', result);
+          continue;
+        }
+
+        const [
+          insurer,
+          policyholder,
+          isFinalized,
+          isPaidOut,
+          coverage,
+          premium,
+          maturitySecond,
+          purchaseDeadline,
+          deposit
+        ] = result;
+
+        // Stop if we hit an empty policy
+        if (insurer === "0x0000000000000000000000000000000000000000") {
           break;
         }
+
+        fetchedPolicies.push({
+          id: i,
+          insurer,
+          policyholder,
+          isFinalized,
+          isPaidOut,
+          coverage,
+          premium,
+          maturitySecond,
+          purchaseDeadline,
+          deposit
+        });
+      } catch (error) {
+        console.error(`Error fetching policy ${i}:`, error);
+        break;
       }
+    }
 
-      setPolicies(fetchedPolicies);
-      setIsLoading(false);
-    };
+    setPolicies(fetchedPolicies);
+    setIsLoading(false);
+  };
 
+  // Initial fetch
+  useEffect(() => {
     fetchPolicies();
   }, [client]);
+
+  // Polling for updates
+  useInterval(() => {
+    if (!isLoading) {
+      fetchPolicies();
+    }
+  }, POLLING_INTERVAL);
 
   const sortedPolicies = [...policies].sort((a, b) => {
     // Sort by isFinalized (available first)
@@ -156,48 +208,46 @@ export const Sellers = () => {
             <tr>
               <th className="rounded-l-lg bg-base-200">ID</th>
               <th className="bg-base-200">Insurer</th>
-              <th className="bg-base-200">Coverage</th>
-              <th className="bg-base-200">Premium</th>
+              <th className="bg-base-200">Coverage (ETH)</th>
+              <th className="bg-base-200">Premium (ETH)</th>
               <th className="bg-base-200">Deadline</th>
               <th className="rounded-r-lg bg-base-200">Action</th>
             </tr>
           </thead>
           <tbody>
-            {sortedPolicies.map((policy, id) => (
-              <tr
-                key={id}
-                className={`
-                  border-base-200 border-2 my-2 
-                  hover:bg-blue-500/10 transition-colors duration-200
-                  ${policy.isFinalized ? 'bg-blue-50 dark:bg-blue-950/30 text-gray-500' : ''}
-                `}
-              >
-                <td className="rounded-l-lg">{id + 1}</td>
-                <td className={`font-mono ${policy.isFinalized ? 'text-gray-500' : ''}`}>
-                  {policy.insurer.slice(0, 6)}...{policy.insurer.slice(-4)}
-                </td>
-                <td className={policy.isFinalized ? 'text-gray-500' : ''}>
-                  {(Number(policy.coverage) / 1e18).toFixed(2)} FLR
-                </td>
-                <td className={policy.isFinalized ? 'text-gray-500' : ''}>
-                  {(Number(policy.premium) / 1e18).toFixed(2)} FLR
-                </td>
-                <td className={policy.isFinalized ? 'text-gray-500' : ''}>
-                  {new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}
-                </td>
-                <td className="rounded-r-lg">
-                  {policy.isFinalized ? (
-                    <span className="btn btn-sm btn-ghost opacity-60">
-                      Sold
-                    </span>
-                  ) : (
-                    <button className="btn btn-primary btn-sm">
-                      Buy
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {sortedPolicies.map((policy) => {
+
+              return (
+                <tr
+                  key={policy.id}
+                  className={`hover border-base-200 border-2 my-2 ${policy.isFinalized
+                      ? 'bg-blue-50 dark:bg-blue-950/30'
+                      : ''
+                    }`}
+                >
+                  <td className="rounded-l-lg">{policy.id}</td>
+                  <td className="font-mono">
+                    {policy.insurer.slice(0, 6)}...{policy.insurer.slice(-4)}
+                  </td>
+                  <td>{policy.coverage?.toString() || '0'}</td>
+                  <td>{policy.premium?.toString() || '0'}</td>
+                  <td>{new Date(Number(policy.purchaseDeadline || 0) * 1000).toLocaleDateString()}</td>
+                  <td className="rounded-r-lg">
+                    {policy.isFinalized ? (
+                      <span className="btn btn-sm btn-ghost opacity-60">
+                        Sold
+                      </span>
+                    ) : (
+                      <button className="btn btn-primary btn-sm"
+                        onClick={() => handleWrite(policy)}
+                      >
+                        Buy
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

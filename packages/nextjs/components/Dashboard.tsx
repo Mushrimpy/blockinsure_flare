@@ -44,7 +44,7 @@ export const WeatherDashboard = () => {
         <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto px-6 py-10">
             {/* Header */}
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold">Weather Insurance Dashboard</h1>
+                <h1 className="text-3xl font-bold">Rainfall Insurance Dashboard </h1>
                 <div className="flex items-center space-x-2">
                     <span className="text-sm text-gray-600">Connected Address:</span>
                     <Address address={connectedAddress} />
