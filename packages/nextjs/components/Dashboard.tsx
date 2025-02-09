@@ -5,6 +5,10 @@ import { useEffect, useState } from "react"
 import { RealData } from "./RealData"
 // import { Sellers } from "./Sellers";
 
+
+// Address for Contract : 0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6
+
+
 // Fetch weather data (Replace with API call)
 const fetchWeatherData = async () => {
     return {
