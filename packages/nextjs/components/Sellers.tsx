@@ -152,6 +152,8 @@ export const Sellers = () => {
 
   // Separate the fetchPolicies function outside useEffect
   const fetchPolicies = async () => {
+    if (!client) return;
+
     const fetchedPolicies: Policy[] = [];
 
     for (let i = 1; i <= 100; i++) {
@@ -250,7 +252,7 @@ export const Sellers = () => {
               <th className="bg-base-200">Insurer</th>
               <th className="bg-base-200">Coverage</th>
               <th className="bg-base-200">Premium</th>
-              <th className="bg-base-200">Deadline</th>
+              <th className="bg-base-200">Maturation</th>
               <th className="rounded-r-lg bg-base-200">Action</th>
             </tr>
           </thead>
@@ -286,7 +288,7 @@ export const Sellers = () => {
                     ) : (
                       Number(policy.maturitySecond) <= Math.floor(Date.now() / 1000) ? (
                         <button
-                          className="btn btn-sm bg-red-400 hover:bg-red-500 text-white border-none"
+                          className="btn btn-sm bg-[#e81c54]/80 hover:bg-[#e81c54] text-white border-none"
                           onClick={() => handleSettle(policy)}
                         >
                           Claim
@@ -299,7 +301,7 @@ export const Sellers = () => {
                     )
                   ) : (
                     <button
-                      className="btn btn-sm bg-blue-400 text-white border-none"
+                      className="btn btn-sm bg-blue-400 hover:bg-blue-500 text-white border-none"
                       onClick={() => handleWrite(policy)}
                     >
                       Buy
