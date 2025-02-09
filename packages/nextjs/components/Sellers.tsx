@@ -17,7 +17,7 @@ interface Policy {
   deposit: bigint;
 }
 
-const CONTRACT_ADDRESS = "0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6";
+const CONTRACT_ADDRESS = "0xe4ee44a1703f3ed5b4aa58641a6ca0b2f4966a7c";
 
 const BUY_ABI = [
   {
