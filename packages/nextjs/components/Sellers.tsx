@@ -252,7 +252,7 @@ export const Sellers = () => {
               <th className="bg-base-200">Insurer</th>
               <th className="bg-base-200">Coverage</th>
               <th className="bg-base-200">Premium</th>
-              <th className="bg-base-200">Maturation</th>
+              <th className="bg-base-200">Maturity</th>
               <th className="rounded-r-lg bg-base-200">Action</th>
             </tr>
           </thead>
