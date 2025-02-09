@@ -5,9 +5,9 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  31337: {
+  114: {
     WeatherInsuranceMarketplace: {
-      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      address: "0xd699b916ac8a9e979d03f00cd511ab8baf00e6d6",
       abi: [
         {
           anonymous: false,
