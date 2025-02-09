@@ -9,7 +9,7 @@ export const RealData = ({ text }: { text: string }) => {
     const handleClick = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch('/api/run-script');
+            const response = await fetch('https://serverless.on-demand.io/apps/hello/ping');
             const data = await response.json();
 
             if (!response.ok) {
@@ -45,7 +45,7 @@ export const RealData = ({ text }: { text: string }) => {
             onClick={handleClick}
             disabled={isLoading}
         >
-            {isLoading ? 'Running... Waiting for Flare Data Connector Validators' : text}
+            {isLoading ? 'Running... Waiting for FDC Validators' : text}
         </button>
     );
 }
