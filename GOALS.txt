@@ -17,9 +17,14 @@ How does it work? 2 party system, flareinsure is a marketplace which empowers bu
 
 Although proof of concept, this is fully customizable
 
+VISION: "FlareInsure leverages Flare's FDC to reinvent micro-insurance marketplaces on the blockchain, bringing real-world data to protect farmers and small businesses against unpredictable risks that threaten their livelihoods."
+
+
 
 Technical Implementation (Include image)
 
+
+reinventing  marketpplace micro insurnace financial
 
 
 
