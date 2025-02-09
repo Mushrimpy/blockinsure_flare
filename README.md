@@ -90,7 +90,7 @@ Special thanks to Phillip and the rest of the Flare team for helping us get set 
 
 ## Contact
 
-For questions and support, please open an issue or contact the team at [contact@flareinsure.com](mailto:simon.socolow@exeter.ox.ac.uk)
+For questions and support, please open an issue or contact the team at [contact@flareinsure.com](mailto:moncef.slimani@magd.ox.ac.uk)
 
 
 
