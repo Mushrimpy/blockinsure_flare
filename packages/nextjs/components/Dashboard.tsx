@@ -305,7 +305,7 @@ export const WeatherDashboard = () => {
             </div>
 
             <RealData
-                text="Flare FDC to get rainfall data on the blockchain"
+                text="Update Rainfall Data with Flare Data Connector"
             />
             <Sellers />
         </div>
