@@ -189,12 +189,13 @@ export const WeatherDashboard = () => {
         setPolicies(fetchedPolicies);
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        fetchWeatherData().then(setWeather)
+        fetchWeatherData().then(setWeather);
         if (client) {
-            fetchPolicies()
+            fetchPolicies();
         }
-    }, [client])
+    }, [client]);
 
     // Helper function for scientific notation
     const toScientific = (num: number | string) => {
@@ -304,7 +305,7 @@ export const WeatherDashboard = () => {
                                     <div>
                                         <h3 className="font-semibold mb-1">Connect Your Wallet</h3>
                                         <p className="text-base-content/70 dark:text-white/70">
-                                            Click the "Connect Wallet" button in the top right corner to connect your MetaMask or other Web3 wallet
+                                            Click the &quot;Connect Wallet&quot; button in the top right corner to connect your MetaMask or other Web3 wallet
                                         </p>
                                     </div>
                                 </div>
@@ -337,7 +338,7 @@ export const WeatherDashboard = () => {
                                     <div>
                                         <h3 className="font-semibold mb-1">Create or Buy Contracts</h3>
                                         <p className="text-base-content/70 dark:text-white/70">
-                                            Use your test tokens to either create new insurance contracts (click "Sell Insurance" in the menu) or purchase existing contracts from the list below
+                                            Use your test tokens to either create new insurance contracts (click &quot;Sell Insurance&quot; in the menu) or purchase existing contracts from the list below
                                         </p>
                                     </div>
                                 </div>
