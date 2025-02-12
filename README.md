@@ -28,13 +28,6 @@ Backend logic repo: https://github.com/ssocolow/flare_insure
    - Multiple validators ensure data accuracy
    - Completely decentralized and tamper-proof
 
-## Team
-
-Team members (from left to right):
-- [Phillip](https://github.com/phillipyan300) 
-- [Moncef](https://github.com/Mushrimpy)
-- [Simon](https://github.com/ssocolow)
-
 ## Technical Architecture
 
 ### Smart Contracts

@@ -24,11 +24,6 @@ How does it work? 2 party system, flareinsure is a marketplace which empowers bu
 - Creation, purchase, and settlement is smart contract, so no foul play
 
 
-Technical
-- Button stuff
-- Smart contract
-
-
 BRAGS:
 - Although this is a proof of concept with just rain as an important, it is important to note that this implementation is use-case agnostic; it simply allows sellers
 and buyers to create insurance policies on some underlying real world data point
