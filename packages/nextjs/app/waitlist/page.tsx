@@ -56,7 +56,7 @@ const WaitlistPage: NextPage = () => {
         {submitted ? (
           <div className="text-center p-6 bg-base-200 rounded-box">
             <h3 className="text-xl font-bold mb-2">Thank you for joining!</h3>
-            <p>We'll notify you when we launch.</p>
+            <p>We&apos;ll notify you when we launch.</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">

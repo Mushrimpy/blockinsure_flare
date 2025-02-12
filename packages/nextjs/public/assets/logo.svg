@@ -1,0 +1,11 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="100" fill="#E61C5D"/>
+  
+  <!-- Shield Shape -->
+  <path d="M100 40 L140 60 L160 100 Q150 150 100 170 Q50 150 40 100 L60 60 Z" fill="white" stroke="#E61C5D" stroke-width="5"/>
+  
+  <!-- Flare "F" Symbol (Inspired by Flare's Logo) -->
+  <path d="M70 80 Q75 60 100 60 L130 60 Q150 60 155 80 Q150 100 130 100 L80 100 Q60 100 55 120 Q60 140 80 140 L100 140" 
+        fill="none" stroke="#E61C5D" stroke-width="10" stroke-linecap="round"/>
+</svg>
