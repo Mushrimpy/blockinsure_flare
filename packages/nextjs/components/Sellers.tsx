@@ -244,6 +244,11 @@ export const Sellers = () => {
 
   return (
     <div className="p-4">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold">Available Contracts</h2>
+        <p className="text-base-content/70">Browse and purchase rainfall insurance contracts</p>
+      </div>
+      
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>

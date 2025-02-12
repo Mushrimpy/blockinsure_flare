@@ -14,12 +14,9 @@ type HeaderMenuLink = {
   icon?: React.ReactNode;
 };
 
-export const menuLinks: HeaderMenuLink[] = [
-  {
-    label: "Home",
-    href: "/",
-  },
+const baseMenuLinks: HeaderMenuLink[] = [];
 
+const demoNetworkLinks: HeaderMenuLink[] = [
   {
     label: "Sell Insurance",
     href: "/debug",
@@ -29,6 +26,12 @@ export const menuLinks: HeaderMenuLink[] = [
 
 export const HeaderMenuLinks = () => {
   const pathname = usePathname();
+  
+  // Check if we're in the dashboard/demo section
+  const isInDemoNetwork = pathname.includes('/dashboard') || pathname.includes('/debug');
+
+  // Use appropriate menu links based on current path
+  const menuLinks = isInDemoNetwork ? demoNetworkLinks : [];
 
   return (
     <>
@@ -39,8 +42,9 @@ export const HeaderMenuLinks = () => {
             <Link
               href={href}
               passHref
-              className={`${isActive ? "bg-secondary shadow-md" : ""
-                } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+              className={`${
+                isActive ? "bg-secondary shadow-md" : ""
+              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
@@ -58,6 +62,10 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isInDemoNetwork = pathname.includes('/dashboard') || pathname.includes('/debug');
+  const logoSize = isInDemoNetwork ? 48 : 32;  // Bigger logo in dashboard
+
   useOutsideClick(
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
@@ -88,7 +96,21 @@ export const Header = () => {
             </ul>
           )}
         </div>
-
+        <Link 
+          href="/" 
+          passHref 
+          className="flex items-center gap-2 ml-4 mr-6 shrink-0 hover:opacity-80 transition-opacity"
+        >
+          <Image
+            src="/assets/logo.png"
+            alt="FlareInsure Logo"
+            width={logoSize}
+            height={logoSize}
+          />
+          <div className="flex flex-col">
+            <span className="font-bold text-lg">FlareInsure</span>
+          </div>
+        </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
         </ul>

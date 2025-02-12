@@ -3,11 +3,20 @@ We all know success of microloans great at helping people expand entrepreneurshi
 - hard to get approved a loan
 - limited capital
 - Long waiting times
-But what if these were not only resolved, but the system made better, allowing people to predict when they might need capital. Enter Flareinsure. Insurance contracts based in on oracle real world events on blockchain. Farmer who not sure about rainfall next month, can buy this micro-insurance.
+But what if these were not only resolved, but the system made better, allowing people to predict when they might need capital. That's why we partnered up to build Flareinsure,
+ a marketplace for micro insurance contracts secured by blockchain but based real world events with Flare's FDC.
+ 
+
+ Consider yourself in the shoes of a farmer, who is unsure about rainfall next month, can buy this micro-insurance.
 - allow anyone to engage the other side (larger market)
 - instant and accurate payout (no bureacracy wiht smart contracts)
 - easy, anonymous access to capital.
 
+
+
+
+
+DEMO: 
 How does it work? 2 party system, flareinsure is a marketplace which empowers buyers and sellers of micro insurance. 
 - Sellers first create a contract (how many days, what is the underlying (right now is rainfall as a proof of concept, but really is a number, can be anything), premium, etc)
 - Buyers then can peruse a range of contract options, find one which is most appropriate for themselves, and then "purchase" the policy by paying the premium to seller
@@ -15,16 +24,17 @@ How does it work? 2 party system, flareinsure is a marketplace which empowers bu
 - Creation, purchase, and settlement is smart contract, so no foul play
 
 
-Although proof of concept, this is fully customizable
-
-VISION: "FlareInsure leverages Flare's FDC to reinvent micro-insurance marketplaces on the blockchain, bringing real-world data to protect farmers and small businesses against unpredictable risks that threaten their livelihoods."
-
-
-
-Technical Implementation (Include image)
+Technical
+- Button stuff
+- Smart contract
 
 
-reinventing  marketpplace micro insurnace financial
+BRAGS:
+- Although this is a proof of concept with just rain as an important, it is important to note that this implementation is use-case agnostic; it simply allows sellers
+and buyers to create insurance policies on some underlying real world data point
+- Fully fledged smart contract to ensure safety including rollbacks, identity checks, and defanging re-entry attacks.
+- Flare Data Connector (FDC) integration with support for one-click management incuding proposing verifying and submitting and onboarding 
+real world data onto the blockchain.
 
-
-
+VISION: "FlareInsure leverages Flare's FDC to reinvent micro-insurance marketplaces on the blockchain, 
+bringing real-world data to protect farmers and small businesses against unpredictable risks that threaten their livelihoods."

@@ -1,11 +1,12 @@
 import { useAccount, usePublicClient } from "wagmi"
 import { Address } from "~~/components/scaffold-eth"
-import { CloudIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon } from "@heroicons/react/24/outline"
+import { CloudIcon, ShieldCheckIcon, CurrencyDollarIcon, ChartBarIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline"
 import { useEffect, useState } from "react"
 import { RealData } from "./RealData"
 import { Sellers } from "./Sellers";
 import { formatEther } from "viem";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import Image from "next/image";
 
 
 const CONTRACT_ADDRESS = "0xe4ee44a1703f3ed5b4aa58641a6ca0b2f4966a7c";
@@ -96,6 +97,17 @@ export const WeatherDashboard = () => {
     const [weather, setWeather] = useState<any>(null)
     const [policies, setPolicies] = useState<Policy[]>([])
     const client = usePublicClient()
+    const [showInstructions, setShowInstructions] = useState(() => {
+        // Check if this is the first visit
+        if (typeof window !== 'undefined') {
+            const hasVisited = localStorage.getItem('hasVisitedDashboard');
+            if (!hasVisited) {
+                localStorage.setItem('hasVisitedDashboard', 'true');
+                return true;
+            }
+        }
+        return false;
+    });
 
     // Get recent transactions
     const { data: policyCreatedEvents } = useScaffoldEventHistory({
@@ -255,14 +267,94 @@ export const WeatherDashboard = () => {
 
     return (
         <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto px-6 py-10">
-            {/* Header */}
+            {/* Header with How It Works Button */}
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold">Rainfall Insurance Dashboard </h1>
+                <button
+                    onClick={() => setShowInstructions(true)}
+                    className="btn btn-md gap-2 bg-[#e81c54]/80 hover:bg-[#e81c54] text-white border-none"
+                >
+                    <QuestionMarkCircleIcon className="h-6 w-6" />
+                    How It Works
+                </button>
                 <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600">Connected Address:</span>
+                    <span className="text-sm dark:text-white/70">Connected Address:</span>
                     <Address address={connectedAddress} />
                 </div>
             </div>
+
+            {/* Instructions Modal */}
+            {showInstructions && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-base-100 dark:bg-base-200 rounded-box max-w-2xl w-full relative">
+                        <button 
+                            onClick={() => setShowInstructions(false)}
+                            className="btn btn-sm btn-circle absolute right-2 top-2"
+                        >
+                            ✕
+                        </button>
+                        
+                        <div className="p-6">
+                            <h2 className="text-2xl font-bold mb-4 dark:text-white">How It Works</h2>
+                            <p className="text-base-content/70 dark:text-white/70 mb-6">Follow these steps to get started with the demo network:</p>
+                            <div className="space-y-4">
+                                <div className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                        1
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold mb-1">Connect Your Wallet</h3>
+                                        <p className="text-base-content/70 dark:text-white/70">
+                                            Click the "Connect Wallet" button in the top right corner to connect your MetaMask or other Web3 wallet
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                        2
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold mb-1">Get Test Tokens</h3>
+                                        <p className="text-base-content/70 dark:text-white/70">
+                                            Visit the{" "}
+                                            <a 
+                                                href="https://faucet.flare.network/" 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="text-primary hover:underline"
+                                            >
+                                                Flare Faucet
+                                            </a>
+                                            {" "}to receive 100 CFLR (Coston testnet tokens). You can request tokens once every 24 hours.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-start gap-3">
+                                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                        3
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold mb-1">Create or Buy Contracts</h3>
+                                        <p className="text-base-content/70 dark:text-white/70">
+                                            Use your test tokens to either create new insurance contracts (click "Sell Insurance" in the menu) or purchase existing contracts from the list below
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 flex justify-end">
+                                <button 
+                                    onClick={() => setShowInstructions(false)}
+                                    className="btn btn-primary"
+                                >
+                                    Got it
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Dashboard Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -318,18 +410,20 @@ const DashboardCard = ({
     icon,
     items,
 }: { title: string; icon: React.ReactNode; items: { label: string; value: string }[] }) => (
-    <div className="card bg-base-100 shadow-md p-4">
-        <div className="flex items-center mb-3">
-            {icon}
-            <h2 className="text-lg font-bold ml-2">{title}</h2>
-        </div>
-        <div className="space-y-2">
-            {items.map((item, index) => (
-                <div key={index} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{item.label}</span>
-                    <span className="font-medium">{item.value}</span>
-                </div>
-            ))}
+    <div className="card bg-base-100 dark:bg-base-200 shadow-xl">
+        <div className="card-body">
+            <div className="flex items-center mb-3">
+                {icon}
+                <h2 className="text-lg font-bold ml-2 dark:text-white">{title}</h2>
+            </div>
+            <div className="space-y-2">
+                {items.map((item, index) => (
+                    <div key={index} className="flex justify-between text-sm">
+                        <span className="text-base-content/70 dark:text-white/70">{item.label}</span>
+                        <span className="font-medium dark:text-white">{item.value}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     </div>
 )
